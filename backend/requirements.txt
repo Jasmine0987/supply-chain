@@ -1,0 +1,113 @@
+# FastAPI
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.0
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+
+
+# Redis
+redis==5.0.1
+hiredis==2.2.3
+
+
+# Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
+
+# CORS (No separate package needed for FastAPI middleware)
+
+
+# WebSocket
+python-socketio==5.10.0
+websockets==12.0
+
+
+# Kafka
+kafka-python==2.0.2
+# Using an older version of confluent-kafka for Python 3.10 compatibility
+confluent-kafka==1.9.2
+
+
+# MQTT
+paho-mqtt==1.6.1
+
+
+# Time-series DB
+influxdb-client==1.38.0
+
+
+# HTTP Clients
+httpx==0.25.2
+requests==2.31.0
+
+
+# ML Libraries
+scikit-learn==1.3.2
+pandas==2.1.3
+numpy==1.26.2
+scipy==1.11.4
+
+
+# Forecasting
+prophet==1.1.5
+statsmodels==0.14.0
+
+
+# Celery (Background Tasks)
+celery==5.3.4
+flower==2.0.1
+
+
+# Email
+# CORRECTED: Use 'email-validator', not 'python-email-validator'
+email-validator==2.1.0
+emails==0.6
+
+
+# Utils
+python-dotenv==1.0.0
+pytz==2023.3
+python-dateutil==2.8.2
+
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+# httpx is repeated here, keeping it for testing clarity
+httpx==0.25.2 
+
+
+# Logging
+loguru==0.7.2
+
+
+# Validation
+# CORRECTED: Use 'email-validator', already listed under Email, so removing duplicate
+phonenumbers==8.13.26
+
+# Existing dependencies...
+
+# Machine Learning
+prophet==1.1.5
+scikit-learn==1.3.2
+numpy==1.26.2
+pmdarima==2.0.4
+joblib==1.3.2
+matplotlib==3.8.2
+seaborn==0.13.0
+
+
+# Temporal Knowledge Graph
+neo4j==5.14.1
+py2neo==2021.2.4
+networkx==3.2.1
