@@ -53,3 +53,12 @@ frontend/.vite/
 *.tmp
 *.temp
 .cache/
+
+# ML Models
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.onnx
+ml_models/
+backend/ml_models/
