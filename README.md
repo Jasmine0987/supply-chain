@@ -1,323 +1,353 @@
-# 🚚 Supply Chain Management System
+# Supply Chain Management System
 
-AI-powered supply chain management system with real-time tracking, route optimization, and predictive analytics.
+AI-powered supply chain analytics and operations platform for tracking shipments, monitoring warehouse inventory, analyzing route performance, and visualizing live IoT sensor data across a connected logistics network.
 
+This repository combines a FastAPI backend, React + TypeScript frontend, and a Docker-based infrastructure stack to provide a complete supply chain dashboard with forecasting, anomaly detection, real-time monitoring, and advanced network analytics.
 
-## ✨ Features
+[![Built with FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)](https://www.python.org/)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED)](https://www.docker.com/)
 
-### 📦 Core Operations
-- **Shipment Management** - Track shipments with real-time status updates
-- **Inventory Control** - Monitor stock levels with automated low-stock alerts
-- **Warehouse Management** - Manage multiple warehouse locations and capacity
-- **Carrier Integration** - Work with multiple shipping carriers with performance ratings
+## Table of Contents
 
-### 🤖 AI & Machine Learning
-- **Route Optimization** - Genetic algorithm & Dijkstra for optimal delivery routes (30% efficiency improvement)
-- **Demand Forecasting** - ARIMA & Prophet models for accurate demand prediction (92%+ accuracy)
-- **Anomaly Detection** - Isolation Forest for detecting unusual patterns in shipments
-- **Predictive Analytics** - ML-powered insights for supply chain optimization
+- [What this project does](#what-this-project-does)
+- [Why it is useful](#why-it-is-useful)
+- [System architecture](#system-architecture)
+- [Repository structure](#repository-structure)
+- [Tech stack](#tech-stack)
+- [Getting started](#getting-started)
+- [Running the app with Docker](#running-the-app-with-docker)
+- [Development workflow](#development-workflow)
+- [Documentation](#documentation)
+- [Maintainers and contributions](#maintainers-and-contributions)
+- [Support and help](#support-and-help)
 
-### 📡 Real-time Monitoring
-- **IoT Integration** - MQTT-based sensor data collection (temperature, humidity, location)
-- **Live Alerts** - Real-time notifications for critical events
-- **WebSocket Updates** - Live dashboard updates without page refresh
-- **Smart Notifications** - Intelligent alert system based on thresholds
+## What this project does
 
-### 📊 Analytics & Reporting
-- **Comprehensive Dashboard** - KPIs, trends, and performance metrics
-- **Cost Analysis** - Detailed breakdown by carrier, route, and shipment
-- **Performance Tracking** - Monitor delivery times, costs, and efficiency
-- **Export Options** - PDF, Excel, and CSV report generation
+This repository is a full-stack supply chain management system built for operations teams that need:
 
-## 🛠️ Tech Stack
+- shipment visibility across carriers and warehouse locations
+- real-time inventory tracking and low-stock alerting
+- predictive demand forecasting and route optimization
+- anomaly detection for operational disruptions
+- IoT sensor monitoring for temperature, humidity, and environment tracking
+- executive dashboards and analytics for operational decision-making
 
-### Backend
-- **Framework:** FastAPI (Python 3.9+)
-- **Database:** PostgreSQL 13+
-- **Cache:** Redis
-- **Message Queue:** MQTT (Mosquitto)
-- **ML Libraries:** Scikit-learn, TensorFlow, Prophet
-- **API Documentation:** OpenAPI (Swagger)
+The application is structured as a monorepo with:
 
-### Frontend
-- **Framework:** React 18 + TypeScript
-- **Styling:** TailwindCSS
-- **State Management:** Redux Toolkit
-- **Charts:** Recharts
-- **Maps:** Mapbox GL
-- **Icons:** Lucide React
+- a Python backend serving REST and WebSocket APIs
+- a React + TypeScript frontend dashboard and admin console
+- supporting infrastructure for PostgreSQL, Redis, Kafka, MQTT, and time-series data
 
-### DevOps
-- **Containerization:** Docker & Docker Compose
-- **Web Server:** Nginx (production)
-- **CI/CD:** GitHub Actions (optional)
+## Why it is useful
 
-## 🚀 Quick Start
+### Core operational benefits
 
-### Prerequisites
-- Python 3.9 or higher
-- Node.js 16 or higher
-- PostgreSQL 13 or higher
-- Redis (optional, for caching)
-- Docker & Docker Compose (recommended)
+- Monitor shipments, carriers, warehouses, and stock levels from one dashboard.
+- Reduce delays by simulating and optimizing delivery routes.
+- Track live conditions across the supply chain using IoT sources.
+- Detect suspicious inventory or logistics patterns before they become disruptions.
+- Give executives faster visibility into KPIs, cost drivers, and operational bottlenecks.
 
-### Installation
+### Advanced analytics and AI
 
-#### Option 1: Docker Compose (Recommended)
+The codebase includes several ML-oriented modules that align with practical supply chain use cases:
 
-```bash
-# Clone the repository
-git clone https://github.com/YOUR_USERNAME/supply-chain-management.git
-cd supply-chain-management
+- route optimization with graph-based path planning
+- forecasting with ARIMA and Prophet-style models
+- anomaly detection for unusual shipment or sensor behavior
+- probabilistic inventory planning and reallocation logic
+- temporal graph analytics for tracing operational relationships over time
+- topology-aware graph intelligence for network disruption analysis
 
-# Start all services
-docker-compose up -d
+These capabilities are implemented as service modules in the backend and surfaced through dedicated dashboard pages in the frontend.
 
-# Access the application
-# Frontend: http://localhost:5173
-# Backend API: http://localhost:8000
-# API Docs: http://localhost:8000/docs
+## System architecture
+
+```mermaid
+flowchart LR
+    A["Frontend Dashboard\nReact + TypeScript\nfrontend/src/App.tsx"] -->|REST + WebSocket| B["FastAPI API\nbackend/app/main.py"]
+    B --> C["Auth + Users + Profiles"]
+    B --> D["Shipments + Inventory + Warehouses + Carriers"]
+    B --> E["Forecasting + Anomaly + Routing"]
+    B --> F["IoT + Sensor Fusion + Realtime"]
+    B --> G["Temporal Graph + Topology GNN + Edge Cloud"]
+
+    F --> H["MQTT Broker\nMosquitto"]
+    F --> I["WebSocket Manager\nRealtime Updates"]
+    B --> J["PostgreSQL\nCore Data"]
+    B --> K["Redis\nCache / Sessions"]
+    B --> L["InfluxDB\nTime-Series Sensor Data"]
+    B --> M["Kafka + Celery\nAsync jobs & background tasks"]
+
+    click A "https://github.com/Jasmine0987/supply-chain/blob/main/frontend/src/App.tsx" "Open frontend entrypoint"
+    click B "https://github.com/Jasmine0987/supply-chain/blob/main/backend/app/main.py" "Open backend entrypoint"
+    click D "https://github.com/Jasmine0987/supply-chain/tree/main/backend/app/api/v1" "Open API handlers"
+    click E "https://github.com/Jasmine0987/supply-chain/tree/main/backend/app/services/ml" "Open ML services"
+    click F "https://github.com/Jasmine0987/supply-chain/tree/main/backend/app/services/iot" "Open IoT services"
+    click G "https://github.com/Jasmine0987/supply-chain/tree/main/backend/app/services/ml/patentable" "Open advanced analytics modules"
+    click J "https://github.com/Jasmine0987/supply-chain/blob/main/docker-compose.yml" "Open infrastructure config"
+    click README "https://github.com/Jasmine0987/supply-chain/blob/main/README.md" "Open project README"
 ```
 
-#### Option 2: Manual Installation
+This architecture keeps presentation, business logic, and data ingestion separate while exposing a unified service layer for analytics, monitoring, and operational workflows.
 
-**Backend:**
-```bash
-cd backend
+## Repository structure
 
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your database credentials
-
-# Run migrations (if using Alembic)
-alembic upgrade head
-
-# Start the server
-uvicorn app.main:app --reload
-```
-
-**Frontend:**
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API URL and Mapbox token
-
-# Start development server
-npm run dev
-```
-
-## 🔑 Default Credentials
-
-- **Email:** admin@supplychain.com
-- **Password:** admin123
-
-⚠️ **Important:** Change these credentials immediately in production!
-
-## 📖 API Documentation
-
-Interactive API documentation is available at:
-- **Swagger UI:** http://localhost:8000/docs
-- **ReDoc:** http://localhost:8000/redoc
-
-### Key Endpoints
-
-```bash
-# Authentication
-POST /api/v1/auth/login
-POST /api/v1/auth/register
-
-# Shipments
-GET    /api/v1/shipments
-POST   /api/v1/shipments
-PUT    /api/v1/shipments/{id}
-DELETE /api/v1/shipments/{id}
-
-# Route Optimization
-POST /api/v1/routing/optimize
-POST /api/v1/routing/optimize-with-constraints
-
-# Forecasting
-POST /api/v1/forecasting/predict
-GET  /api/v1/forecasting/anomalies
-
-# Analytics
-GET /api/v1/analytics?range=30d
-```
-
-## 📁 Project Structure
-
-```
+```text
 supply-chain/
+├── README.md                         # Project overview and onboarding
+├── docker-compose.yml                # Core infrastructure services
+├── docs/
+│   ├── api/README.md                 # API documentation
+│   ├── deployment/                   # Deployment recipes
+│   └── user-guide/getting-started.md # Usage guidance
 ├── backend/
 │   ├── app/
-│   │   ├── api/          # API routes
-│   │   ├── models/       # Database models
-│   │   ├── services/     # Business logic
-│   │   │   ├── ml/       # ML models
-│   │   │   └── iot/      # IoT handlers
-│   │   ├── core/         # Config & security
-│   │   └── main.py       # FastAPI app
-│   ├── tests/            # Backend tests
-│   ├── requirements.txt
-│   └── Dockerfile
+│   │   ├── api/v1/                   # REST endpoints
+│   │   ├── core/                     # Config, security, Celery setup
+│   │   ├── db/                       # SQLAlchemy setup and DB init
+│   │   ├── models/                   # ORM models
+│   │   ├── schemas/                  # Pydantic schemas
+│   │   ├── services/                 # Routing, ML, IoT, real-time logic
+│   │   ├── tasks/                    # Background tasks
+│   │   └── main.py                   # FastAPI app entrypoint
+│   ├── scripts/
+│   │   ├── iot_simulator.py          # Simulated sensor input
+│   │   └── seed_data.py              # Sample dataset seeding
+│   ├── requirements.txt              # Python dependencies
+│   ├── alembic/                      # Database migrations
+│   ├── DockerFile                    # Backend container build
+│   └── verify_system.py              # environment/system verification helper
 ├── frontend/
 │   ├── src/
-│   │   ├── components/   # Reusable components
-│   │   ├── features/     # Feature modules
-│   │   ├── pages/        # Page components
-│   │   ├── store/        # Redux store
-│   │   ├── services/     # API services
-│   │   └── App.tsx
-│   ├── public/
-│   ├── package.json
-│   └── Dockerfile
-├── docker-compose.yml
-└── README.md
+│   │   ├── features/                 # Dashboard modules and pages
+│   │   ├── components/               # Reusable UI and charts
+│   │   ├── services/                 # API and websocket clients
+│   │   ├── store/                    # Redux state management
+│   │   ├── App.tsx                   # SPA bootstrap and routing
+│   │   └── main.tsx                  # Frontend bootstrap
+│   ├── package.json                  # Frontend scripts and dependencies
+│   ├── Dockerfile                    # Frontend container build
+│   ├── nginx.conf                    # Nginx reverse proxy config
+│   └── README.md                     # Frontend-specific notes
+├── infrastructure/
+│   ├── docker/
+│   ├── mosquitto.conf                # MQTT config
+│   └── nginx/                        # Additional proxy config
+└── .gitignore
 ```
 
-## 🧪 Testing
+## Tech stack
 
-### Backend Tests
+### Backend
+
+- Python 3.10+
+- FastAPI
+- SQLAlchemy + Alembic
+- PostgreSQL
+- Redis
+- Kafka and Celery
+- MQTT (Mosquitto)
+- InfluxDB
+- scikit-learn, NumPy, pandas, SciPy
+- Prophet and statsmodels for forecasting
+- Neo4j and NetworkX for graph modeling
+
+### Frontend
+
+- React 19
+- TypeScript
+- Vite
+- Redux Toolkit
+- React Router
+- Recharts
+- Mapbox GL
+- Tailwind CSS
+- Socket.IO client and WebSocket integration
+
+### Infrastructure
+
+- Docker Compose
+- Nginx
+- PostgreSQL container
+- Redis container
+- InfluxDB container
+- Kafka + Zookeeper container stack
+- MQTT broker container
+
+## Getting started
+
+### Prerequisites
+
+Before running the repo locally, install:
+
+- Python 3.10 or newer
+- Node.js 18 or newer
+- npm
+- Docker and Docker Compose
+- PostgreSQL client tools if you want to inspect DB state locally
+
+### Clone the repository
+
 ```bash
-cd backend
-pytest
-pytest --cov=app tests/  # With coverage
+git clone https://github.com/Jasmine0987/supply-chain.git
+cd supply-chain
 ```
 
-### Frontend Tests
+### Environment configuration
+
+The project expects environment variables to support infrastructure services. The root Docker Compose file loads values from `backend/.env`.
+
+Create a backend environment file if needed:
+
 ```bash
-cd frontend
-npm test
-npm run test:coverage
+cp backend/.env.example backend/.env
 ```
 
-## 📈 Performance Metrics
+If `.env.example` does not exist in your checkout, use values similar to:
 
-- **Route Optimization:** 30% reduction in delivery distance
-- **Forecast Accuracy:** 92%+ MAE score
-- **Anomaly Detection:** Real-time processing with 95%+ accuracy
-- **API Response Time:** <100ms average
-- **WebSocket Latency:** <50ms for real-time updates
-
-## 🔧 Configuration
-
-### Environment Variables
-
-**Backend (.env):**
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/supplychain
-REDIS_URL=redis://localhost:6379
-MQTT_BROKER=localhost
-MQTT_PORT=1883
-SECRET_KEY=your-secret-key-here
+POSTGRES_USER=supplychain
+POSTGRES_PASSWORD=your_secure_password
+POSTGRES_DB=supplychain
+REDIS_PASSWORD=your_redis_password
+INFLUXDB_USERNAME=admin
+INFLUXDB_PASSWORD=your_influx_password
+INFLUXDB_TOKEN=your_influx_token
+VITE_API_BASE_URL=http://localhost:8000
+VITE_MAPBOX_ACCESS_TOKEN=your_mapbox_token
+SECRET_KEY=change_this_value
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
-**Frontend (.env):**
-```env
-VITE_API_URL=http://localhost:8000
-VITE_MAPBOX_ACCESS_TOKEN=your-mapbox-token
-```
+## Running the app with Docker
 
-## 🚀 Deployment
-
-### Docker Production Build
+The repo includes a production-style container setup for all core services.
 
 ```bash
-# Build images
-docker-compose -f docker-compose.prod.yml build
-
-# Start services
-docker-compose -f docker-compose.prod.yml up -d
-
-# View logs
-docker-compose logs -f
+docker-compose up --build
 ```
 
-### Manual Production Deployment
+This starts:
 
-**Backend:**
+- PostgreSQL at `localhost:5432`
+- Redis at `localhost:6379`
+- InfluxDB at `localhost:8086`
+- Kafka at `localhost:9092`
+- MQTT broker at `localhost:1883`
+- FastAPI backend at `http://localhost:8000`
+- Frontend at `http://localhost:80` or `http://localhost:443`
+- Nginx at `http://localhost:8080`
+
+### Useful Docker commands
+
 ```bash
-# Install production dependencies
+docker-compose logs -f backend
+docker-compose restart backend
+docker-compose down -v
+```
+
+## Development workflow
+
+### Backend setup
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-
-# Run with Gunicorn
-gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker
+uvicorn app.main:app --reload
 ```
 
-**Frontend:**
+The backend is exposed through routers such as:
+
+- `/api/v1/auth`
+- `/api/v1/shipments`
+- `/api/v1/inventory`
+- `/api/v1/warehouses`
+- `/api/v1/routing`
+- `/api/v1/forecasting`
+- `/api/v1/iot`
+- `/api/v1/anomaly`
+- `/api/v1/temporal-graph`
+- `/api/v1/topology-gnn`
+- `/api/v1/edge-cloud`
+
+### Frontend setup
+
 ```bash
-# Build for production
-npm run build
-
-# Serve with Nginx or any static file server
+cd frontend
+npm install
+npm run dev
 ```
 
-## 🤝 Contributing
+The frontend entrypoint is `frontend/src/App.tsx`, and it wires the dashboard to the backend through Redux and API service modules.
 
-Contributions are welcome! Please follow these steps:
+### Testing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+The repository includes backend testing packages and frontend tooling. Typical commands include:
 
-### Coding Standards
+```bash
+cd backend
+pytest
 
-- **Python:** Follow PEP 8
-- **TypeScript:** Use ESLint + Prettier
-- **Commits:** Use conventional commits (feat, fix, docs, etc.)
+cd frontend
+npm run build
+npm run lint
+```
 
-## 📄 License
+## Documentation
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This repo contains a few useful documentation paths:
 
-## 👥 Authors
+- [docs/api/README.md](docs/api/README.md)
+- [docs/user-guide/getting-started.md](docs/user-guide/getting-started.md)
+- [docs/deployment/aws-deployment.md](docs/deployment/aws-deployment.md)
+- [docs/deployment/heroku-deployment.md](docs/deployment/heroku-deployment.md)
+- [docs/deployment/vercel-deployment.md](docs/deployment/vercel-deployment.md)
 
-- **Your Name** - *Initial work* - [@yourhandle](https://github.com/yourhandle)
+The FastAPI app also exposes interactive Swagger docs when the environment is in debug mode:
 
-## 🙏 Acknowledgments
+- `http://localhost:8000/docs`
+- `http://localhost:8000/redoc`
 
-- FastAPI for the amazing Python web framework
-- React team for the powerful UI library
-- Scikit-learn for ML capabilities
-- Mapbox for mapping services
-- All contributors who helped with this project
+## Maintainers and contributions
 
-## 📞 Support
+This repository is maintained under the ownership of Jasmine0987 and is intended for active development and community contribution.
 
-- **Documentation:** [Link to docs]
-- **Issues:** [GitHub Issues](https://github.com/YOUR_USERNAME/supply-chain-management/issues)
-- **Email:** support@yourdomain.com
+If you would like to contribute:
 
-## 🗺️ Roadmap
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes with clear commit messages.
+4. Run the relevant tests and lint checks.
+5. Open a pull request with a concise summary of the improvement.
 
-- [x] Core CRUD operations
-- [x] AI route optimization
-- [x] ML demand forecasting
-- [x] Real-time monitoring
-- [ ] Mobile application
-- [ ] Advanced analytics
-- [ ] Multi-tenant support
-- [ ] API rate limiting
-- [ ] Automated testing
-- [ ] Cloud deployment guides
+Common contribution areas include:
 
+- API improvements and bug fixes
+- frontend dashboard UX improvements
+- forecasting and optimization experiments
+- IoT simulation and data modeling
+- docs and deployment improvements
 
----
+## Support and help
 
-**Built with ❤️ for efficient supply chain management**
+If you need help or want to understand the repo faster, start with:
+
+- the project root README
+- [docs/api/README.md](docs/api/README.md)
+- [docs/user-guide/getting-started.md](docs/user-guide/getting-started.md)
+- the GitHub Issues tab for the repository
+
+For local debugging, start with the backend entrypoint at `backend/app/main.py` and the frontend entrypoint at `frontend/src/App.tsx`.
+
+## Summary
+
+This project is a practical, end-to-end supply chain management platform that blends operations, analytics, and real-time monitoring in a single application. It is especially useful for teams that want a modern internal dashboard to monitor logistics performance, automate decision-making, and experiment with AI-driven operational analytics.
+
+If you want, I can also generate a shorter GitHub-friendly README version optimized for a polished landing page, or tailor the README specifically toward startup / enterprise / developer audience.
